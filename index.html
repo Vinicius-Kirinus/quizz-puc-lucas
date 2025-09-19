@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Quiz Estilo BuzzFeed</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f9f9f9;
+      padding: 20px;
+    }
+    #quiz-container {
+      max-width: 600px;
+      margin: auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      border: 1px solid #ddd;
+    }
+    h2 {
+      text-align: center;
+    }
+    .pergunta {
+      margin-bottom: 20px;
+    }
+    .opcao {
+      padding: 10px;
+      border: 1px solid #ccc;
+      margin: 5px 0;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .opcao:hover {
+      background: #eaeaea;
+    }
+    .opcao.selecionada {
+      background: #007bff;
+      color: #fff;
+      font-weight: bold;
+    }
+    #btn-resultado {
+      background-color: #28a745;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    #btn-resultado:hover {
+      background-color: #1e7e34;
+    }
+    #resultado {
+      margin-top: 20px;
+      font-weight: bold;
+      text-align: center;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+  <div id="quiz-container">
+    <h2>Qual personagem você seria?</h2>
+    
+    <div class="pergunta" data-pergunta="1">
+      <p>1. Qual sua comida favorita?</p>
+      <div class="opcao" data-valor="1">🍕 Pizza</div>
+      <div class="opcao" data-valor="2">🍣 Sushi</div>
+      <div class="opcao" data-valor="3">🍔 Hambúrguer</div>
+    </div>
+
+    <div class="pergunta" data-pergunta="2">
+      <p>2. Qual seu hobby?</p>
+      <div class="opcao" data-valor="1">📖 Ler</div>
+      <div class="opcao" data-valor="2">✈️ Viajar</div>
+      <div class="opcao" data-valor="3">🎮 Jogar videogame</div>
+    </div>
+
+    <div class="pergunta" data-pergunta="3">
+      <p>3. O que você prefere?</p>
+      <div class="opcao" data-valor="1">🏡 Ficar em casa</div>
+      <div class="opcao" data-valor="2">👥 Sair com amigos</div>
+      <div class="opcao" data-valor="3">🎉 Ir a festas</div>
+    </div>
+
+    <br>
+    <button id="btn-resultado">Ver Resultado</button>
+    <div id="resultado"></div>
+  </div>
+
+  <script>
+    let respostas = {};
+
+    document.addEventListener("DOMContentLoaded", function() {
+      document.querySelectorAll(".opcao").forEach(function(opcao) {
+        opcao.addEventListener("click", function() {
+          let pergunta = this.parentElement.getAttribute("data-pergunta");
+          let valor = this.getAttribute("data-valor");
+          respostas[pergunta] = parseInt(valor);
+
+          this.parentElement.querySelectorAll(".opcao").forEach(o => o.classList.remove("selecionada"));
+          this.classList.add("selecionada");
+        });
+      });
+
+      document.getElementById("btn-resultado").addEventListener("click", function() {
+        let total = 0;
+        for (let p in respostas) {
+          total += respostas[p];
+        }
+
+        let resultado = "";
+        if (total <= 3) {
+          resultado = "Você é tranquilo e caseiro 😌";
+        } else if (total <= 6) {
+          resultado = "Você é equilibrado e sociável 🙂";
+        } else {
+          resultado = "Você é extrovertido e festeiro 🎉";
+        }
+
+        document.getElementById("resultado").innerText = resultado;
+      });
+    });
+  </script>
+</body>
+</html>
